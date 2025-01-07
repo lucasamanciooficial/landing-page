@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto - Loja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #19595d;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        .product-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .product-image {
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #9b9b9b;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .product-description {
+            margin: 20px 0;
+        }
+        .product-price {
+            font-size: 20px;
+            color: #19595d;
+        }
+        .product-promo-price {
+            font-size: 18px;
+            color: #9b9b9b;
+            text-decoration: line-through;
+        }
+        .installment {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .variant-selector {
+            margin: 20px 0;
+        }
+        .buy-button {
+            background-color: #19595d;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .buy-button:hover {
+            background-color: #143f41;
+        }
+        .info-icons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .info-icon {
+            text-align: center;
+            cursor: pointer;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 500px;
+            text-align: center;
+        }
+        .modal-close {
+            margin-top: 10px;
+            background-color: #19595d;
+            color: #ffffff;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="product-header">
+            <h1>Nome da Loja</h1>
+        </header>
+        <main class="product-main">
+            <div class="product-header">
+                <img src="produto.jpg" alt="Produto" class="product-image">
+                <div class="product-info">
+                    <h2 class="product-title">Nome do Produto</h2>
+                    <div class="product-description">
+                        <textarea id="product-description" placeholder="Descrição do produto..."></textarea>
+                    </div>
+                    <div class="product-price">
+                        Preço: <span id="product-price">R$ 100,00</span>
+                    </div>
+                    <div class="product-promo-price">
+                        Preço Promocional: <span id="promo-price">R$ 80,00</span>
+                    </div>
+                    <div class="installment">
+                        ou 12x de R$ <span id="installment-price">6,67</span>
+                    </div>
+                    <div class="variant-selector">
+                        <label for="variants">Escolha uma variante:</label>
+                        <select id="variants">
+                            <option value="modelo1">Modelo 1</option>
+                            <option value="modelo2">Modelo 2</option>
+                        </select>
+                    </div>
+                    <button class="buy-button" onclick="redirectToCheckout()">Comprar agora</button>
+                </div>
+            </div>
+            <div class="info-icons">
+                <div class="info-icon" onclick="openModal('secure-purchase')">
+                    <img src="secure-icon.png" alt="Compra Segura">
+                    <p>Compra Segura</p>
+                </div>
+                <div class="info-icon">
+                    <img src="free-shipping.png" alt="Frete Grátis">
+                    <p>Sua região está com frete grátis</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="modal-secure-purchase" class="modal">
+        <div class="modal-content">
+            <p>Política de Privacidade: Seu pagamento é 100% seguro.</p>
+            <button class="modal-close" onclick="closeModal('secure-purchase')">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        function redirectToCheckout() {
+            window.location.href = "https://checkout.plataforma.com";
+        }
+
+        function openModal(id) {
+            document.getElementById('modal-' + id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById('modal-' + id).style.display = 'none';
+        }
+
+        // Atualização do preço parcelado
+        document.getElementById('promo-price').addEventListener('input', function() {
+            const price = parseFloat(this.innerText.replace('R$', '').replace(',', '.'));
+            document.getElementById('installment-price').innerText = (price / 12).toFixed(2).replace('.', ',');
+        });
+    </script>
+</body>
+</html>
